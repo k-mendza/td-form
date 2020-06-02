@@ -32,7 +32,7 @@ export class UserSettingsFormComponent implements OnInit {
   onSubmit(form: NgForm): void {
     if (form.valid) {
       this.dataService.postUserSettings(this.userSettings).subscribe(
-        result => console.log(result),
+        () => this.onHttpSuccess(),
        error => this.onHttpError(error)
       );
     } else {
@@ -41,9 +41,13 @@ export class UserSettingsFormComponent implements OnInit {
     }
   }
 
+  private onHttpSuccess(): void {
+    this.postError = false;
+    this.postErrorMessage = '';
+  }
+
   onHttpError(errorResponse: any): void {
     this.postError = true;
     this.postErrorMessage = errorResponse.error.errorMessage;
   }
-
 }

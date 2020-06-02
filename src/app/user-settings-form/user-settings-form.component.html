@@ -8,8 +8,12 @@
              [class.field-error]="form.submitted && nameField.invalid">
     </div>
 
-    <div [hidden]="!(form.submitted && nameField.invalid)" class="alert alert-danger">
-      Enter a name
+    <div *ngIf="form.submitted && nameField.errors?.required" class="alert alert-danger">
+      Enter a name.
+    </div>
+
+    <div *ngIf="form.submitted && nameField.errors?.minlength" class="alert alert-danger">
+      Name must be at least 5 characters long.
     </div>
 
     <div class="form-check form-group">
@@ -54,10 +58,10 @@
       <textarea id="notes" name="notes" class="form-control" rows="3" [(ngModel)]="userSettings.notes"></textarea>
     </div>
 
-    <div [hidden]="!postError" class="alert alert-danger">
+    <div *ngIf="postError" class="alert alert-danger">
       {{postErrorMessage}}
     </div>
 
-    <button class="btn btn-primary">Send</button>
+    <button [disabled]="form.submitted && form.invalid" class="btn btn-primary">Send</button>
   </form>
 </div>
